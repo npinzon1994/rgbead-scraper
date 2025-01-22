@@ -2,11 +2,34 @@ const express = require("express");
 const axios = require("axios");
 const cheerio = require("cheerio");
 const cors = require("cors");
+const sharp = require("sharp");
+const multer = require("multer");
 
 const app = express(); //this is the express app
 const PORT = process.env.PORT || 5000; //in case we have an env variable
+const upload = multer(); //communicates between frontend and backend
 
 app.use(cors()); //ensures the frontend can call this API without CORS issues
+
+app.post("/api/upload-image", upload.single("image"), async (req, res) => {
+  try {
+    const imageBuffer = req.file.buffer; //pixel array multer receives from client
+    const image = sharp(imageBuffer); // image created from uploaded pixel array
+    const { data, info } = await image
+      .raw()
+      .ensureAlpha()
+      .toBuffer({ resolveWithObject: true });
+    console.log("PIXEL ARRAY: ", data);
+    return res.json({
+      width: info.width,
+      height: info.height,
+      pixels: Array.from(data),
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Failed to process image");
+  }
+});
 
 app.get("/api/colors", async (req, res) => {
   //could get an error back so need try/catch
@@ -23,7 +46,7 @@ app.get("/api/colors", async (req, res) => {
      */
     const colors = {};
 
-    console.log("Number of <tr> elements:", $("tr").length);
+    console.log("Scraping web contents...");
     $("tr").each((_, tr) => {
       const $tr = $(tr); //wrap current <tr> in cheerio for further manipulation
       const cells = $tr.find("td.s6, td.s8");
@@ -32,9 +55,8 @@ app.get("/api/colors", async (req, res) => {
 
       //looping over <td> elements (4 per row)
       cells.each((index, td) => {
-        
         const cellData = $(td).text().trim();
-        console.log(`Cell ${index + 1}:`, cellData);
+        // console.log(`Cell ${index + 1}:`, cellData);
 
         switch (index) {
           case 0:

@@ -19,7 +19,7 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
       .raw()
       .ensureAlpha()
       .toBuffer({ resolveWithObject: true });
-    console.log("PIXEL ARRAY: ", data);
+    // console.log("PIXEL ARRAY: ", Array.from(data));
     return res.json({
       width: info.width,
       height: info.height,
@@ -38,12 +38,6 @@ app.get("/api/colors", async (req, res) => {
       "https://docs.google.com/spreadsheets/u/0/d/e/2PACX-1vSRqGEhhyOK6pA0CWBGRU1AMPoe6AV2vDMcgw0bainqpv9-MEloTm5xR2NyaS-S3A44yXdicNksjao8/pubhtml/sheet?headers=false&gid=170380569";
     const { data } = await axios.get(url); //fetching webpage HTML from URL
     const $ = cheerio.load(data); // loading the HTML for easy DOM traversal
-
-    /**
-     * iterating over all <tr> elements from webpage
-     * capturing their data
-     * and storing in the colors[] array
-     */
     const colors = {};
 
     console.log("Scraping web contents...");
@@ -56,8 +50,6 @@ app.get("/api/colors", async (req, res) => {
       //looping over <td> elements (4 per row)
       cells.each((index, td) => {
         const cellData = $(td).text().trim();
-        // console.log(`Cell ${index + 1}:`, cellData);
-
         switch (index) {
           case 0:
             currentColorName = cellData;

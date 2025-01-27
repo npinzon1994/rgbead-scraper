@@ -19,7 +19,7 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
       .raw()
       .ensureAlpha()
       .toBuffer({ resolveWithObject: true });
-    // console.log("PIXEL ARRAY: ", Array.from(data));
+    console.log("ORIGINAL PIXEL ARRAY: ", Array.from(data));
     return res.json({
       width: info.width,
       height: info.height,

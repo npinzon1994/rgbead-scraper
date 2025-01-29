@@ -41,10 +41,10 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
 
     const { width, height } = info;
     const pixels = Array.from(data);
-    // console.log("ORIGINAL PIXEL ARRAY: ", pixels);
+    console.log("ORIGINAL PIXEL STREAM: ", pixels);
 
     const parsedColors = parseColors(pixels);
-    // console.log("Parsed Colors (Objects): ", parsedColors);
+    console.log("Parsed Colors (Objects): ", parsedColors);
 
     const colors = Object.values(parsedColors).flatMap(({ r, g, b, a }) => [
       r,
@@ -52,25 +52,28 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
       b,
       a,
     ]);
-    // console.log("Colors Stream FROM PIXEL ARRAY: ", colors);
+    console.log("Colors Stream FROM ORIGINAL PIXEL STREAM: ", colors);
 
     const lookupTable = Object.keys(scrapedColors).flatMap((colorKey) => {
       const extractedValues = colorKey.match(/\d+/g).map(Number);
       return [extractedValues[0], extractedValues[1], extractedValues[2]];
     });
-    // console.log("Lookup Table FROM SCRAPED COLORS: ", lookupTable);
+    console.log("Lookup Table FROM SCRAPED COLORS: ", lookupTable);
 
     //convert and transform
     const colorsMatrix_RGBA = toMatrix(colors);
-    // console.log("Colors RGBA Matrix: ", colorsMatrix_RGBA);
+    const [r_colors, g_colors, b_colors, alpha_colors] = colorsMatrix_RGBA;
+    const colorsMatrix_XYZ = RGBtoXYZ([r_colors, g_colors, b_colors]);
 
-    const xyzaObject = RGBAtoXYZA(colorsMatrix_RGBA);
-    const { xyz: colorsMatrix_XYZ, a: alphaValues } = xyzaObject;
+    console.log("Colors RGBA Matrix: ", colorsMatrix_RGBA);
+    console.log("Colors RGB Matrix: ", [r_colors, g_colors, b_colors]);
+    console.log("Colors XYZ Matrix: ", colorsMatrix_XYZ);
 
-    // console.log("Colors XYZ Matrix: ", colorsMatrix_XYZ);
+    const lookupTableMatrix_RGB = toMatrix(lookupTable, "RGB");
+    console.log("Lookup Table RGB Matrix", lookupTableMatrix_RGB);
 
-    const lookupTableMatrix_RGB = toMatrix(lookupTable);
     const lookupTableMatrix_XYZ = RGBtoXYZ(lookupTableMatrix_RGB);
+    console.log("Lookup Table XYZ Matrix", lookupTableMatrix_XYZ);
 
     //need to run the XYZ to Lab conversion for every pixel
     const colors_LabValues = [];
@@ -104,11 +107,12 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
       lookupTable_LabValues.push(labPixel);
     }
 
-    // console.log("Colors Lab Values", colors_LabValues);
-    // console.log("Lab values -- LOOKUP TABLE", lookupTable_LabValues);
+    console.log("Colors Lab Values", colors_LabValues);
+    console.log("Lab values -- LOOKUP TABLE", lookupTable_LabValues);
 
     //now find nearest neighbor
     const colorLookupTree = new KDTree(lookupTable_LabValues);
+    console.log("COLOR LOOKUP TREE: ", colorLookupTree);
 
     //[[L, a, b, A], [L, a, b, A], ...]
     const newColors = colors_LabValues.map((value) => {
@@ -124,7 +128,7 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
       const value = colors_LabValues[i];
       const labPixel = colorLookupTree.findNearestNeighbor(value).point;
       const xyzPixel = LabToXYZ(labPixel);
-      const rgbaPixel = { ...XYZtoRGB(xyzPixel), a: alphaValues[i] };
+      const rgbaPixel = { ...XYZtoRGB(xyzPixel), a: alpha_colors[i] };
       nuColors.push(rgbaPixel);
     }
 
@@ -135,8 +139,8 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
       ({ r, g, b, a }) => `R${r}G${g}B${b}A${a}`
     );
 
-    // console.log("OLD color keys", colorKeys);
-    // console.log("NEW color keys", newColorKeys);
+    console.log("OLD color keys", colorKeys);
+    console.log("NEW color keys", newColorKeys);
 
     const colorComparisonChart = {};
     for (let i = 0; i < colorKeys.length; i++) {

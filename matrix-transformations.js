@@ -20,18 +20,29 @@ function parseColors(pixels) {
   return colors;
 }
 
-function toMatrix(rgbArray) {
+function toMatrix(rgbArray, colorMode = "RGBA") {
   const r = [];
   const g = [];
   const b = [];
   const a = [];
-  for (let i = 0; i < rgbArray.length; i += 4) {
-    r.push(rgbArray[i]);
-    g.push(rgbArray[i + 1]);
-    b.push(rgbArray[i + 2]);
-    a.push(rgbArray[i + 3]);
+  if (colorMode === "RGBA") {
+    for (let i = 0; i < rgbArray.length; i += 4) {
+      r.push(rgbArray[i]);
+      g.push(rgbArray[i + 1]);
+      b.push(rgbArray[i + 2]);
+      a.push(rgbArray[i + 3]);
+    }
   }
-  return [r, g, b, a];
+  if (colorMode === "RGB") {
+    for (let i = 0; i < rgbArray.length; i += 3) {
+      r.push(rgbArray[i]);
+      g.push(rgbArray[i + 1]);
+      b.push(rgbArray[i + 2]);
+    }
+  }
+
+  //only include alpha values if they exist
+  return a.length > 0 ? [r, g, b, a] : [r, g, b];
 }
 
 function RGBAtoXYZA([r, g, b, a]) {
@@ -43,19 +54,19 @@ function RGBAtoXYZA([r, g, b, a]) {
 }
 
 function RGBtoXYZ(rgbMatrix) {
-  const normalizedValues = [];
-  for (let i = 0; i < rgbMatrix.length - 1; i++) {
-    //omitting Alpha channel
-    const values = [];
-    for (let j = 0; j < rgbMatrix[i].length; j++) {
-      values.push(rgbMatrix[i][j] / 255);
-    }
-    normalizedValues.push(values);
-  }
+  // const normalizedValues = [];
+  // for (let i = 0; i < rgbMatrix.length - 1; i++) {
+  //   //omitting Alpha channel
+  //   const values = [];
+  //   for (let j = 0; j < rgbMatrix[i].length; j++) {
+  //     values.push(rgbMatrix[i][j] / 255);
+  //   }
+  //   normalizedValues.push(values);
+  // }
 
-  // const normalizedValues = rgbMatrix.map((innerArray) =>
-  //   innerArray.map((value) => value / 255)
-  // );
+  const normalizedValues = rgbMatrix.map((innerArray) =>
+    innerArray.map((value) => value / 255)
+  );
   const linearizedValues = normalizedValues.map((innerArray) =>
     innerArray.map((value) =>
       value <= 0.04045 ? value / 12.92 : Math.pow((value + 0.055) / 1.055, 2.4)

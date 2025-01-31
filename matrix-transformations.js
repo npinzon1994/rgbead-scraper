@@ -1,8 +1,4 @@
-const CONVERSION_MATRIX = [
-  [0.4124564, 0.3575761, 0.1804375],
-  [0.2126729, 0.7151522, 0.072175],
-  [0.0193339, 0.119192, 0.9503041],
-];
+const KDTree = require('./kd-tree');
 
 function parseColors(pixels) {
   const colors = {};
@@ -46,23 +42,16 @@ function toMatrix(rgbArray, colorMode = "RGBA") {
 }
 
 function RGBAtoXYZA([r, g, b, a]) {
-  // console.log("R values - ", r);
-  // console.log("G values - ", g);
-  // console.log("B values - ", b);
   const xyz = RGBtoXYZ([r, g, b, a]);
   return { xyz, a };
 }
 
 function RGBtoXYZ(rgbMatrix) {
-  // const normalizedValues = [];
-  // for (let i = 0; i < rgbMatrix.length - 1; i++) {
-  //   //omitting Alpha channel
-  //   const values = [];
-  //   for (let j = 0; j < rgbMatrix[i].length; j++) {
-  //     values.push(rgbMatrix[i][j] / 255);
-  //   }
-  //   normalizedValues.push(values);
-  // }
+  const CONVERSION_MATRIX = [
+    [0.4124564, 0.3575761, 0.1804375],
+    [0.2126729, 0.7151522, 0.072175],
+    [0.0193339, 0.119192, 0.9503041],
+  ];
 
   const normalizedValues = rgbMatrix.map((innerArray) =>
     innerArray.map((value) => value / 255)
@@ -195,6 +184,95 @@ function XYZtoRGB(xyzPixel) {
   };
 }
 
+function processImage(pixels, scrapedColors) {
+  const colors = Object.values(parseColors(pixels)).flatMap(
+    ({ r, g, b, a }) => [r, g, b, a]
+  );
+
+  const lookupTable = Object.keys(scrapedColors).flatMap((colorKey) => {
+    const extractedValues = colorKey.match(/\d+/g).map(Number);
+    return [extractedValues[0], extractedValues[1], extractedValues[2]];
+  });
+
+  //convert and transform
+  const colorsMatrix_RGBA = toMatrix(colors);
+  const [r_colors, g_colors, b_colors, alpha_colors] = colorsMatrix_RGBA;
+  const colorsMatrix_XYZ = RGBtoXYZ([r_colors, g_colors, b_colors]);
+
+  const lookupTableMatrix_RGB = toMatrix(lookupTable, "RGB");
+  const lookupTableMatrix_XYZ = RGBtoXYZ(lookupTableMatrix_RGB);
+
+  //need to run the XYZ to Lab conversion for every pixel
+  const colors_LabValues = [];
+  for (let i = 0; i < colorsMatrix_XYZ[0].length; i++) {
+    const pixel = [];
+    for (let j = 0; j < colorsMatrix_XYZ.length; j++) {
+      pixel.push(colorsMatrix_XYZ[j][i]);
+    }
+    const xyzPixel = {
+      x: pixel[0],
+      y: pixel[1],
+      z: pixel[2],
+    };
+    const labPixel = Object.values(XYZtoLab(xyzPixel));
+    colors_LabValues.push(labPixel);
+  }
+
+  //need to run the XYZ to Lab conversion for every pixel
+  const lookupTable_LabValues = [];
+  for (let i = 0; i < lookupTableMatrix_XYZ[0].length; i++) {
+    const pixel = [];
+    for (let j = 0; j < lookupTableMatrix_XYZ.length; j++) {
+      pixel.push(lookupTableMatrix_XYZ[j][i]);
+    }
+    const xyzPixel = {
+      x: pixel[0],
+      y: pixel[1],
+      z: pixel[2],
+    };
+    const labPixel = Object.values(XYZtoLab(xyzPixel));
+    lookupTable_LabValues.push(labPixel);
+  }
+
+  //now find nearest neighbor
+  const colorLookupTree = new KDTree(lookupTable_LabValues);
+
+  const nuColors = [];
+  for (let i = 0; i < colors_LabValues.length; i++) {
+    const value = colors_LabValues[i];
+    const labPixel = colorLookupTree.findNearestNeighbor(value).point;
+    const xyzPixel = LabToXYZ(labPixel);
+    const rgbaPixel = { ...XYZtoRGB(xyzPixel), a: alpha_colors[i] };
+    nuColors.push(rgbaPixel);
+  }
+
+  const colorKeys = Object.keys(parseColors(pixels));
+  const newColorKeys = nuColors.map(({ r, g, b, a }) => `R${r}G${g}B${b}A${a}`);
+
+  const colorComparisonChart = {};
+  for (let i = 0; i < colorKeys.length; i++) {
+    colorComparisonChart[colorKeys[i]] = newColorKeys[i];
+  }
+
+  const updatedPixels = [];
+  for (let i = 0; i < pixels.length; i += 4) {
+    const colorKey = `R${pixels[i]}G${pixels[i + 1]}B${pixels[i + 2]}A${
+      pixels[i + 3]
+    }`;
+
+    const extractedValues = colorComparisonChart[colorKey]
+      .match(/\d+/g)
+      .map(Number);
+    updatedPixels.push(
+      extractedValues[0],
+      extractedValues[1],
+      extractedValues[2],
+      extractedValues[3]
+    );
+  }
+  return {updatedPixels, lookupTable_LabValues};
+}
+
 module.exports = {
   parseColors,
   toMatrix,
@@ -203,4 +281,5 @@ module.exports = {
   XYZtoLab,
   LabToXYZ,
   XYZtoRGB,
+  processImage,
 };

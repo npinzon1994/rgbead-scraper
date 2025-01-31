@@ -4,18 +4,7 @@ const cheerio = require("cheerio");
 const cors = require("cors");
 const sharp = require("sharp");
 const multer = require("multer");
-
-const {
-  parseColors,
-  toMatrix,
-  RGBtoXYZ,
-  RGBAtoXYZA,
-  XYZtoLab,
-  LabToXYZ,
-  XYZtoRGB,
-} = require("./matrix-transformations");
-
-const KDTree = require("./kd-tree");
+const { processImage } = require("./matrix-transformations");
 
 const app = express(); //this is the express app
 const PORT = process.env.PORT || 5000; //in case we have an env variable
@@ -24,6 +13,35 @@ const upload = multer(); //communicates between frontend and backend
 app.use(cors()); //ensures the frontend can call this API without CORS issues
 
 const scrapedColors = {};
+
+app.get("/api/default-image", async (req, res) => {
+  const filePath = "./assets/felicia-darkstalkers.png";
+  try {
+    const imageBuffer = await sharp(filePath).toBuffer();
+    const image = sharp(imageBuffer); // image created from uploaded pixel array
+    const { data, info } = await image
+      .raw()
+      .ensureAlpha()
+      .toBuffer({ resolveWithObject: true });
+
+    const { width, height } = info;
+    const pixels = Array.from(data);
+    const { updatedPixels, lookupTable_LabValues } = processImage(
+      pixels,
+      scrapedColors
+    );
+    console.log("UPDATED PIXELS: ", updatedPixels);
+
+    return res.json({
+      width,
+      height,
+      pixels: updatedPixels,
+      lookupTable_LabValues,
+    });
+  } catch (error) {
+    return res.status(500).json("Error reading image");
+  }
+});
 
 app.post("/api/upload-image", upload.single("image"), async (req, res) => {
   try {
@@ -41,143 +59,10 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
 
     const { width, height } = info;
     const pixels = Array.from(data);
-    console.log("ORIGINAL PIXEL STREAM: ", pixels);
-
-    const parsedColors = parseColors(pixels);
-    console.log("Parsed Colors (Objects): ", parsedColors);
-
-    const colors = Object.values(parsedColors).flatMap(({ r, g, b, a }) => [
-      r,
-      g,
-      b,
-      a,
-    ]);
-    console.log("Colors Stream FROM ORIGINAL PIXEL STREAM: ", colors);
-
-    const lookupTable = Object.keys(scrapedColors).flatMap((colorKey) => {
-      const extractedValues = colorKey.match(/\d+/g).map(Number);
-      return [extractedValues[0], extractedValues[1], extractedValues[2]];
-    });
-    console.log("Lookup Table FROM SCRAPED COLORS: ", lookupTable);
-
-    //convert and transform
-    const colorsMatrix_RGBA = toMatrix(colors);
-    const [r_colors, g_colors, b_colors, alpha_colors] = colorsMatrix_RGBA;
-    const colorsMatrix_XYZ = RGBtoXYZ([r_colors, g_colors, b_colors]);
-
-    console.log("Colors RGBA Matrix: ", colorsMatrix_RGBA);
-    console.log("Colors RGB Matrix: ", [r_colors, g_colors, b_colors]);
-    console.log("Colors XYZ Matrix: ", colorsMatrix_XYZ);
-
-    const lookupTableMatrix_RGB = toMatrix(lookupTable, "RGB");
-    console.log("Lookup Table RGB Matrix", lookupTableMatrix_RGB);
-
-    const lookupTableMatrix_XYZ = RGBtoXYZ(lookupTableMatrix_RGB);
-    console.log("Lookup Table XYZ Matrix", lookupTableMatrix_XYZ);
-
-    //need to run the XYZ to Lab conversion for every pixel
-    const colors_LabValues = [];
-    for (let i = 0; i < colorsMatrix_XYZ[0].length; i++) {
-      const pixel = [];
-      for (let j = 0; j < colorsMatrix_XYZ.length; j++) {
-        pixel.push(colorsMatrix_XYZ[j][i]);
-      }
-      const xyzPixel = {
-        x: pixel[0],
-        y: pixel[1],
-        z: pixel[2],
-      };
-      const labPixel = Object.values(XYZtoLab(xyzPixel));
-      colors_LabValues.push(labPixel);
-    }
-
-    //need to run the XYZ to Lab conversion for every pixel
-    const lookupTable_LabValues = [];
-    for (let i = 0; i < lookupTableMatrix_XYZ[0].length; i++) {
-      const pixel = [];
-      for (let j = 0; j < lookupTableMatrix_XYZ.length; j++) {
-        pixel.push(lookupTableMatrix_XYZ[j][i]);
-      }
-      const xyzPixel = {
-        x: pixel[0],
-        y: pixel[1],
-        z: pixel[2],
-      };
-      const labPixel = Object.values(XYZtoLab(xyzPixel));
-      lookupTable_LabValues.push(labPixel);
-    }
-
-    console.log("Colors Lab Values", colors_LabValues);
-    console.log("Lab values -- LOOKUP TABLE", lookupTable_LabValues);
-
-    //now find nearest neighbor
-    const colorLookupTree = new KDTree(lookupTable_LabValues);
-    console.log("COLOR LOOKUP TREE: ", colorLookupTree);
-
-    //[[L, a, b, A], [L, a, b, A], ...]
-    const newColors = colors_LabValues.map((value) => {
-      //array of objects
-      //only run NN when pixel is NOT TRANSPARENT
-      const labPixel = colorLookupTree.findNearestNeighbor(value).point;
-      const xyzPixel = LabToXYZ(labPixel);
-      return XYZtoRGB(xyzPixel);
-    });
-
-    const nuColors = [];
-    for (let i = 0; i < colors_LabValues.length; i++) {
-      const value = colors_LabValues[i];
-      const labPixel = colorLookupTree.findNearestNeighbor(value).point;
-      const xyzPixel = LabToXYZ(labPixel);
-      const rgbaPixel = { ...XYZtoRGB(xyzPixel), a: alpha_colors[i] };
-      nuColors.push(rgbaPixel);
-    }
-
-    console.log("Nu colors: ", nuColors);
-
-    const colorKeys = Object.keys(parseColors(pixels));
-    const newColorKeys = nuColors.map(
-      ({ r, g, b, a }) => `R${r}G${g}B${b}A${a}`
+    const { updatedPixels, lookupTable_LabValues } = processImage(
+      pixels,
+      scrapedColors
     );
-
-    console.log("OLD color keys", colorKeys);
-    console.log("NEW color keys", newColorKeys);
-
-    const colorComparisonChart = {};
-    for (let i = 0; i < colorKeys.length; i++) {
-      colorComparisonChart[colorKeys[i]] = newColorKeys[i];
-    }
-
-    console.log("Number of colors: ", Object.keys(colorComparisonChart).length);
-    console.log("Color Comparison Chart: ", colorComparisonChart);
-
-    /**
-     * --run through original pixel array
-     * --for every 4 elements, create colorKey
-     * --check for colorKey in colorComparisonChart
-     * --if colorKey exists, take the value at that key
-     *    and extract its RGBA values
-     *    --place said values in new array
-     * --else just add the current 4 elements to the new array
-     */
-    const updatedPixels = [];
-    for (let i = 0; i < pixels.length; i += 4) {
-      const colorKey = `R${pixels[i]}G${pixels[i + 1]}B${pixels[i + 2]}A${
-        pixels[i + 3]
-      }`;
-      // console.log("Color Key: ", colorKey);
-
-      const extractedValues = colorComparisonChart[colorKey]
-        .match(/\d+/g)
-        .map(Number);
-      // console.log("Extracted values: ", extractedValues);
-      updatedPixels.push(
-        extractedValues[0],
-        extractedValues[1],
-        extractedValues[2],
-        extractedValues[3]
-      );
-    }
-    // console.log("Updated Pixels: ", updatedPixels);
 
     return res.json({
       width,

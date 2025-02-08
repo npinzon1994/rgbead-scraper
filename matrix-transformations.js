@@ -1,4 +1,4 @@
-const KDTree = require('./kd-tree');
+const KDTree = require("./kd-tree");
 
 function parseColors(pixels) {
   const colors = {};
@@ -17,10 +17,16 @@ function parseColors(pixels) {
 }
 
 function toMatrix(rgbArray, colorMode = "RGBA") {
+  if (rgbArray.length % 3 !== 0 && rgbArray.length % 4 !== 0) {
+    throw new Error("Invalid pixel data length. Image may be corrupted.");
+  }
+
   const r = [];
   const g = [];
   const b = [];
   const a = [];
+
+  //for converting values from IMAGE (accounting for transparent pixels)
   if (colorMode === "RGBA") {
     for (let i = 0; i < rgbArray.length; i += 4) {
       r.push(rgbArray[i]);
@@ -29,6 +35,8 @@ function toMatrix(rgbArray, colorMode = "RGBA") {
       a.push(rgbArray[i + 3]);
     }
   }
+
+  //for converting values from WEB SCRAPER (their data omits alpha values)
   if (colorMode === "RGB") {
     for (let i = 0; i < rgbArray.length; i += 3) {
       r.push(rgbArray[i]);
@@ -41,19 +49,39 @@ function toMatrix(rgbArray, colorMode = "RGBA") {
   return a.length > 0 ? [r, g, b, a] : [r, g, b];
 }
 
-function RGBAtoXYZA([r, g, b, a]) {
-  const xyz = RGBtoXYZ([r, g, b, a]);
-  return { xyz, a };
-}
+function RGBAtoXYZA(rgbaMatrix) {
+  //checking for empty input matrix
+  if (
+    rgbaMatrix.length === 4 &&
+    (!Array.isArray(rgbaMatrix) ||
+      rgbaMatrix.length < 3 ||
+      rgbaMatrix.some((row) => !Array.isArray(row) || row.length === 0))
+  ) {
+    throw new Error("Input matrix cannot be empty");
+  }
 
-function RGBtoXYZ(rgbMatrix) {
+  if (
+    rgbaMatrix.length === 3 &&
+    (!Array.isArray(rgbaMatrix) ||
+      rgbaMatrix.length < 3 ||
+      rgbaMatrix.some((row) => !Array.isArray(row) || row.length === 0))
+  ) {
+    throw new Error("Lookup table cannot be empty");
+  }
+
   const CONVERSION_MATRIX = [
     [0.4124564, 0.3575761, 0.1804375],
     [0.2126729, 0.7151522, 0.072175],
     [0.0193339, 0.119192, 0.9503041],
   ];
+  const r = rgbaMatrix[0];
+  const g = rgbaMatrix[1];
+  const b = rgbaMatrix[2];
+  const a = rgbaMatrix.length === 4 ? rgbaMatrix[3] : Array(r.length).fill(255);
 
-  const normalizedValues = rgbMatrix.map((innerArray) =>
+  const newMatrix_RGB = [r, g, b];
+
+  const normalizedValues = newMatrix_RGB.map((innerArray) =>
     innerArray.map((value) => value / 255)
   );
   const linearizedValues = normalizedValues.map((innerArray) =>
@@ -65,15 +93,7 @@ function RGBtoXYZ(rgbMatrix) {
   // Get dimensions of the matrices
   const rowsA = CONVERSION_MATRIX.length;
   const colsA = CONVERSION_MATRIX[0].length;
-  const rowsB = linearizedValues.length;
   const colsB = linearizedValues[0].length;
-
-  // Ensure the number of columns in A matches the number of rows in B
-  if (colsA !== rowsB) {
-    throw new Error(
-      `Matrix multiplication not possible: columns of A (${colsA}) must equal rows of B (${rowsB})`
-    );
-  }
 
   // Initialize the result matrix with zeros (to ensure it isn't sparse)
   const result = Array(rowsA)
@@ -89,7 +109,11 @@ function RGBtoXYZ(rgbMatrix) {
       }
     }
   }
-  return result;
+  return { xyz: result, a };
+}
+
+function transformationFunction_XYZtoLAB(t, delta = 6 / 29) {
+  return t > delta ** 3 ? Math.cbrt(t) : t / (3 * delta ** 2) + 4 / 29;
 }
 
 function XYZtoLab(xyzPixel, whitePoint = { X: 95.0489, Y: 100.0, Z: 108.884 }) {
@@ -105,15 +129,10 @@ function XYZtoLab(xyzPixel, whitePoint = { X: 95.0489, Y: 100.0, Z: 108.884 }) {
   const Yr = y / Yn;
   const Zr = z / Zn;
 
-  //define the transformation function f(t)
-  const delta = 6 / 29;
-  const f = (t) =>
-    t > delta ** 3 ? Math.cbrt(t) : t / (3 * delta ** 2) + 4 / 29;
-
   //apply transformation function
-  const fX = f(Xr);
-  const fY = f(Yr);
-  const fZ = f(Zr);
+  const fX = transformationFunction_XYZtoLAB(Xr);
+  const fY = transformationFunction_XYZtoLAB(Yr);
+  const fZ = transformationFunction_XYZtoLAB(Zr);
 
   //calculate CIELAB values
   const L = 116 * fY - 16;
@@ -186,28 +205,29 @@ function XYZtoRGB(xyzPixel) {
 
 function processImage(pixels, scrapedColors) {
   const colors = Object.values(parseColors(pixels)).flatMap(
+    //from img - RGBA
     ({ r, g, b, a }) => [r, g, b, a]
   );
 
   const lookupTable = Object.keys(scrapedColors).flatMap((colorKey) => {
+    //scraped - RGB
     const extractedValues = colorKey.match(/\d+/g).map(Number);
     return [extractedValues[0], extractedValues[1], extractedValues[2]];
   });
 
   //convert and transform
   const colorsMatrix_RGBA = toMatrix(colors);
-  const [r_colors, g_colors, b_colors, alpha_colors] = colorsMatrix_RGBA;
-  const colorsMatrix_XYZ = RGBtoXYZ([r_colors, g_colors, b_colors]);
+  const colorsMatrix_XYZA = RGBAtoXYZA(colorsMatrix_RGBA);
 
   const lookupTableMatrix_RGB = toMatrix(lookupTable, "RGB");
-  const lookupTableMatrix_XYZ = RGBtoXYZ(lookupTableMatrix_RGB);
+  const lookupTableMatrix_XYZA = RGBAtoXYZA(lookupTableMatrix_RGB);
 
   //need to run the XYZ to Lab conversion for every pixel
   const colors_LabValues = [];
-  for (let i = 0; i < colorsMatrix_XYZ[0].length; i++) {
+  for (let i = 0; i < colorsMatrix_XYZA.xyz[0].length; i++) {
     const pixel = [];
-    for (let j = 0; j < colorsMatrix_XYZ.length; j++) {
-      pixel.push(colorsMatrix_XYZ[j][i]);
+    for (let j = 0; j < colorsMatrix_XYZA.xyz.length; j++) {
+      pixel.push(colorsMatrix_XYZA.xyz[j][i]);
     }
     const xyzPixel = {
       x: pixel[0],
@@ -220,10 +240,10 @@ function processImage(pixels, scrapedColors) {
 
   //need to run the XYZ to Lab conversion for every pixel
   const lookupTable_LabValues = [];
-  for (let i = 0; i < lookupTableMatrix_XYZ[0].length; i++) {
+  for (let i = 0; i < lookupTableMatrix_XYZA.xyz[0].length; i++) {
     const pixel = [];
-    for (let j = 0; j < lookupTableMatrix_XYZ.length; j++) {
-      pixel.push(lookupTableMatrix_XYZ[j][i]);
+    for (let j = 0; j < lookupTableMatrix_XYZA.xyz.length; j++) {
+      pixel.push(lookupTableMatrix_XYZA.xyz[j][i]);
     }
     const xyzPixel = {
       x: pixel[0],
@@ -242,7 +262,7 @@ function processImage(pixels, scrapedColors) {
     const value = colors_LabValues[i];
     const labPixel = colorLookupTree.findNearestNeighbor(value).point;
     const xyzPixel = LabToXYZ(labPixel);
-    const rgbaPixel = { ...XYZtoRGB(xyzPixel), a: alpha_colors[i] };
+    const rgbaPixel = { ...XYZtoRGB(xyzPixel), a: colorsMatrix_RGBA[3][i] };
     nuColors.push(rgbaPixel);
   }
 
@@ -270,14 +290,14 @@ function processImage(pixels, scrapedColors) {
       extractedValues[3]
     );
   }
-  return {updatedPixels, lookupTable_LabValues};
+  return { updatedPixels, lookupTable_LabValues };
 }
 
 module.exports = {
   parseColors,
   toMatrix,
-  RGBtoXYZ,
   RGBAtoXYZA,
+  transformationFunction_XYZtoLAB,
   XYZtoLab,
   LabToXYZ,
   XYZtoRGB,

@@ -44,11 +44,15 @@ app.get("/api/default-image", async (req, res) => {
 });
 
 app.post("/api/upload-image", upload.single("image"), async (req, res) => {
+  console.log("Received request at /api/upload-image"); // Debugging log
   try {
     if (scrapedColors.length === 0) {
       return res
         .status(400)
         .json({ error: "No colors available. Scrape colors first!" });
+    }
+    if (!req.file) {
+      return res.status(500).json({ error: "No image uploaded" });
     }
     const imageBuffer = req.file.buffer; //pixel array multer receives from client
     const image = sharp(imageBuffer); // image created from uploaded pixel array
@@ -82,9 +86,9 @@ app.get("/api/colors", async (req, res) => {
     const url =
       "https://docs.google.com/spreadsheets/u/0/d/e/2PACX-1vSRqGEhhyOK6pA0CWBGRU1AMPoe6AV2vDMcgw0bainqpv9-MEloTm5xR2NyaS-S3A44yXdicNksjao8/pubhtml/sheet?headers=false&gid=170380569";
     const { data } = await axios.get(url); //fetching webpage HTML from URL
+    console.log("Axios response data: ", data);
     const $ = cheerio.load(data); // loading the HTML for easy DOM traversal
 
-    console.log("Scraping web contents...");
     $("tr").each((_, tr) => {
       const $tr = $(tr); //wrap current <tr> in cheerio for further manipulation
       const cells = $tr.find("td.s6, td.s8");
@@ -112,13 +116,14 @@ app.get("/api/colors", async (req, res) => {
         }
       });
     });
-    res.json(scrapedColors);
+    if (!scrapedColors || Object.keys(scrapedColors).length === 0) {
+      return res.status(400).json({ error: "No colors available" });
+    }
+    res.status(200).json(scrapedColors);
   } catch (error) {
     console.error("Error", error.message);
     res.status(500).json({ error: "Failed to fetch data." });
   }
 });
 
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-);
+module.exports = app;

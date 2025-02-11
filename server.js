@@ -1,3 +1,4 @@
 const app = require("./index");
-const server = app.listen(5000, () => console.log("Server running on port 5000"));
+const port = process.env.PORT || 5000;
+const server = app.listen(port, () => console.log(`Server running on port ${port} `));
 module.exports = server;

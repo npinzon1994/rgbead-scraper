@@ -16,7 +16,7 @@ COPY . .
 ENV PORT=${PORT:-5000}
 
 # Expose the port your app runs on (default: 5000)
-EXPOSE $PORT
+EXPOSE ${PORT}
 
 # Define the command to run your app
 CMD ["npm", "start"]

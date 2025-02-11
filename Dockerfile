@@ -13,8 +13,10 @@ RUN npm install
 # Copy the rest of the app's code into the container
 COPY . .
 
+ENV PORT=${PORT:-5000}
+
 # Expose the port your app runs on (default: 5000)
-EXPOSE 5000
+EXPOSE $PORT
 
 # Define the command to run your app
-CMD ["node", "server.js"]
+CMD ["npm", "start"]

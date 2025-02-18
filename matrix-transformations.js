@@ -209,17 +209,14 @@ function processImage(pixels, scrapedColors) {
     ({ r, g, b, a }) => [r, g, b, a]
   );
 
-  const lookupTable = Object.keys(scrapedColors).flatMap((colorKey) => {
-    //scraped - RGB
-    const extractedValues = colorKey.match(/\d+/g).map(Number);
-    return [extractedValues[0], extractedValues[1], extractedValues[2]];
-  });
+  //using this table because of new scrapedColors structure
+  const table = Object.values(scrapedColors).flatMap((color) => [color.r, color.g, color.b]);
 
   //convert and transform
   const colorsMatrix_RGBA = toMatrix(colors);
   const colorsMatrix_XYZA = RGBAtoXYZA(colorsMatrix_RGBA);
 
-  const lookupTableMatrix_RGB = toMatrix(lookupTable, "RGB");
+  const lookupTableMatrix_RGB = toMatrix(table, "RGB");
   const lookupTableMatrix_XYZA = RGBAtoXYZA(lookupTableMatrix_RGB);
 
   //need to run the XYZ to Lab conversion for every pixel

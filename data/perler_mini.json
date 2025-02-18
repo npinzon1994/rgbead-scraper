@@ -1,0 +1,31 @@
+{
+  "R46G47B50": { "name": "Black", "r": 46, "g": 47, "b": 50 },
+  "R79G173B66": { "name": "Bright Green", "r": 79, "g": 173, "b": 66 },
+  "R81G57B49": { "name": "Brown", "r": 81, "g": 57, "b": 49 },
+  "R221G102B155": { "name": "Bubblegum", "r": 221, "g": 102, "b": 155 },
+  "R241G170B12": { "name": "Cheddar", "r": 241, "g": 170, "b": 12 },
+  "R43G63B135": { "name": "Dark Blue", "r": 43, "g": 63, "b": 135 },
+  "R77G81B86": { "name": "Dark Gray", "r": 77, "g": 81, "b": 86 },
+  "R28G117B62": { "name": "Dark Green", "r": 28, "g": 117, "b": 62 },
+  "R138G141B145": { "name": "Gray", "r": 138, "g": 141, "b": 145 },
+  "R108G190B19": { "name": "Kiwi Lime", "r": 108, "g": 190, "b": 19 },
+  "R51G112B192": { "name": "Light Blue", "r": 51, "g": 112, "b": 192 },
+  "R129G93B52": { "name": "Light Brown", "r": 129, "g": 93, "b": 52 },
+  "R177G181B178": { "name": "Light Gray", "r": 177, "g": 181, "b": 178 },
+  "R246G179B221": { "name": "Light Pink", "r": 246, "g": 179, "b": 221 },
+  "R237G97B32": { "name": "Orange", "r": 237, "g": 97, "b": 32 },
+  "R138G114B193": { "name": "Pastel Lavender", "r": 138, "g": 114, "b": 193 },
+  "R96G64B137": { "name": "Purple", "r": 96, "g": 64, "b": 137 },
+  "R191G46B64": { "name": "Red", "r": 191, "g": 46, "b": 64 },
+  "R228G182B144": { "name": "Sand", "r": 228, "g": 182, "b": 144 },
+  "R188G147B113": { "name": "Tan", "r": 188, "g": 147, "b": 113 },
+  "R222G218B206": {
+    "name": "Toasted Marshmallow",
+    "r": 222,
+    "g": 218,
+    "b": 206
+  },
+  "R147G200B212": { "name": "Toothpaste", "r": 147, "g": 200, "b": 212 },
+  "R241G241B241": { "name": "White", "r": 241, "g": 241, "b": 241 },
+  "R236G216B0": { "name": "Yellow", "r": 236, "g": 216, "b": 0 }
+}

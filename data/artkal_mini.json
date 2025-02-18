@@ -1,0 +1,1102 @@
+{
+  "R255G255B255": {
+    "name": "White",
+    "r": 255,
+    "g": 255,
+    "b": 255,
+    "code": "C01"
+  },
+  "R239G239B239": {
+    "name": "Ghost White",
+    "r": 239,
+    "g": 239,
+    "b": 239,
+    "code": "C87"
+  },
+  "R209G209B209": {
+    "name": "Ash Gray",
+    "r": 209,
+    "g": 209,
+    "b": 209,
+    "code": "C88"
+  },
+  "R187G188B188": {
+    "name": "Light Gray",
+    "r": 187,
+    "g": 188,
+    "b": 188,
+    "code": "C89"
+  },
+  "R155G155B155": {
+    "name": "Gray",
+    "r": 155,
+    "g": 155,
+    "b": 155,
+    "code": "C33"
+  },
+  "R136G139B141": {
+    "name": "Oslo Gray",
+    "r": 136,
+    "g": 139,
+    "b": 141,
+    "code": "C56"
+  },
+  "R118G119B119": {
+    "name": "Dark Gray",
+    "r": 118,
+    "g": 119,
+    "b": 119,
+    "code": "C34"
+  },
+  "R68G80B91": {
+    "name": "Steel Gray",
+    "r": 68,
+    "g": 80,
+    "b": 91,
+    "code": "C155"
+  },
+  "R72G73B85": {
+    "name": "Charcoal Gray",
+    "r": 72,
+    "g": 73,
+    "b": 85,
+    "code": "C90"
+  },
+  "R62G73B85": {
+    "name": "Iron Gray",
+    "r": 62,
+    "g": 73,
+    "b": 85,
+    "code": "C156"
+  },
+  "R35G40B43": {
+    "name": "Mine Shaft",
+    "r": 35,
+    "g": 40,
+    "b": 43,
+    "code": "C69"
+  },
+  "R32G40B48": {
+    "name": "Pepper",
+    "r": 32,
+    "g": 40,
+    "b": 48,
+    "code": "C157"
+  },
+  "R0G0B0": {
+    "name": "Black",
+    "r": 0,
+    "g": 0,
+    "b": 0,
+    "code": "C02"
+  },
+  "R160G159B157": {
+    "name": "Metallic Silver",
+    "r": 160,
+    "g": 159,
+    "b": 157,
+    "code": "C35"
+  },
+  "R218G182B152": {
+    "name": "Pale Skin",
+    "r": 218,
+    "g": 182,
+    "b": 152,
+    "code": "C92"
+  },
+  "R249G200B152": {
+    "name": "Sahara Sand",
+    "r": 249,
+    "g": 200,
+    "b": 152,
+    "code": "C153"
+  },
+  "R205G178B119": {
+    "name": "Deer",
+    "r": 205,
+    "g": 178,
+    "b": 119,
+    "code": "C74"
+  },
+  "R195G144B105": {
+    "name": "Sun-kissed Tan",
+    "r": 195,
+    "g": 144,
+    "b": 105,
+    "code": "C154"
+  },
+  "R181G129B80": {
+    "name": "Clay",
+    "r": 181,
+    "g": 129,
+    "b": 80,
+    "code": "C75"
+  },
+  "R123G77B53": {
+    "name": "Light Brown",
+    "r": 123,
+    "g": 77,
+    "b": 53,
+    "code": "C31"
+  },
+  "R99G67B56": {
+    "name": "Mocha",
+    "r": 99,
+    "g": 67,
+    "b": 56,
+    "code": "C147"
+  },
+  "R92G71B56": {
+    "name": "Brown",
+    "r": 92,
+    "g": 71,
+    "b": 56,
+    "code": "C32"
+  },
+  "R83G26B35": {
+    "name": "Brick Red",
+    "r": 83,
+    "g": 26,
+    "b": 35,
+    "code": "C59"
+  },
+  "R92G19B27": {
+    "name": "Red Wine",
+    "r": 92,
+    "g": 19,
+    "b": 27,
+    "code": "C78"
+  },
+  "R122G62B44": {
+    "name": "Redwood",
+    "r": 122,
+    "g": 62,
+    "b": 44,
+    "code": "C30"
+  },
+  "R164G73B61": {
+    "name": "Buccaneer",
+    "r": 164,
+    "g": 73,
+    "b": 61,
+    "code": "C29"
+  },
+  "R204G153B102": {
+    "name": "Sand",
+    "r": 204,
+    "g": 153,
+    "b": 102,
+    "code": "C23"
+  },
+  "R243G207B179": {
+    "name": "Vanilla",
+    "r": 243,
+    "g": 207,
+    "b": 179,
+    "code": "C47"
+  },
+  "R237G211B158": {
+    "name": "Creme",
+    "r": 237,
+    "g": 211,
+    "b": 158,
+    "code": "C148"
+  },
+  "R255G231B128": {
+    "name": "Beeswax",
+    "r": 255,
+    "g": 231,
+    "b": 128,
+    "code": "C24"
+  },
+  "R222G185B71": {
+    "name": "Dandelion",
+    "r": 222,
+    "g": 185,
+    "b": 71,
+    "code": "C91"
+  },
+  "R180G126B0": {
+    "name": "Marigold",
+    "r": 180,
+    "g": 126,
+    "b": 0,
+    "code": "C28"
+  },
+  "R184G97B37": {
+    "name": "Sienna",
+    "r": 184,
+    "g": 97,
+    "b": 37,
+    "code": "C73"
+  },
+  "R212G114B42": {
+    "name": "Papaya",
+    "r": 212,
+    "g": 114,
+    "b": 42,
+    "code": "C96"
+  },
+  "R239G129B46": {
+    "name": "Faded Orange",
+    "r": 239,
+    "g": 129,
+    "b": 46,
+    "code": "C65"
+  },
+  "R237G139B0": {
+    "name": "Yellow Orange",
+    "r": 237,
+    "g": 139,
+    "b": 0,
+    "code": "C04"
+  },
+  "R246G176B76": {
+    "name": "Tangerine",
+    "r": 246,
+    "g": 176,
+    "b": 76,
+    "code": "C03"
+  },
+  "R255G103B31": {
+    "name": "Orange",
+    "r": 255,
+    "g": 103,
+    "b": 31,
+    "code": "C17"
+  },
+  "R255G106B19": {
+    "name": "Bright Carrot",
+    "r": 255,
+    "g": 106,
+    "b": 19,
+    "code": "C16"
+  },
+  "R252G251B205": {
+    "name": "Spring Sun",
+    "r": 252,
+    "g": 251,
+    "b": 205,
+    "code": "C51"
+  },
+  "R241G235B156": {
+    "name": "Pale Banana",
+    "r": 241,
+    "g": 235,
+    "b": 156,
+    "code": "C61"
+  },
+  "R242G240B161": {
+    "name": "Picasso",
+    "r": 242,
+    "g": 240,
+    "b": 161,
+    "code": "C10"
+  },
+  "R246G235B97": {
+    "name": "Pastel Yellow",
+    "r": 246,
+    "g": 235,
+    "b": 97,
+    "code": "C41"
+  },
+  "R250G224B83": {
+    "name": "Sandstorm",
+    "r": 250,
+    "g": 224,
+    "b": 83,
+    "code": "C42"
+  },
+  "R255G209B0": {
+    "name": "Yellow",
+    "r": 255,
+    "g": 209,
+    "b": 0,
+    "code": "C11"
+  },
+  "R255G199B44": {
+    "name": "Corn",
+    "r": 255,
+    "g": 199,
+    "b": 44,
+    "code": "C48"
+  },
+  "R234G170B0": {
+    "name": "Goldenrod",
+    "r": 234,
+    "g": 170,
+    "b": 0,
+    "code": "C71"
+  },
+  "R255G197B110": {
+    "name": "Pastel Orange",
+    "r": 255,
+    "g": 197,
+    "b": 110,
+    "code": "C72"
+  },
+  "R252G191B169": {
+    "name": "Bubble Gum",
+    "r": 252,
+    "g": 191,
+    "b": 169,
+    "code": "C22"
+  },
+  "R255G163B139": {
+    "name": "Burning Sand",
+    "r": 255,
+    "g": 163,
+    "b": 139,
+    "code": "C44"
+  },
+  "R255G109B106": {
+    "name": "Coral Red",
+    "r": 255,
+    "g": 109,
+    "b": 106,
+    "code": "C76"
+  },
+  "R252G63B63": {
+    "name": "Fruit Punch",
+    "r": 252,
+    "g": 63,
+    "b": 63,
+    "code": "C62"
+  },
+  "R244G169B153": {
+    "name": "Warm Blush",
+    "r": 244,
+    "g": 169,
+    "b": 153,
+    "code": "C93"
+  },
+  "R238G125B103": {
+    "name": "Salmon",
+    "r": 238,
+    "g": 125,
+    "b": 103,
+    "code": "C94"
+  },
+  "R240G134B97": {
+    "name": "Apricot",
+    "r": 240,
+    "g": 134,
+    "b": 97,
+    "code": "C95"
+  },
+  "R170G87B97": {
+    "name": "Deep Chestnut",
+    "r": 170,
+    "g": 87,
+    "b": 97,
+    "code": "C77"
+  },
+  "R201G128B158": {
+    "name": "Old Pink",
+    "r": 201,
+    "g": 128,
+    "b": 158,
+    "code": "C36"
+  },
+  "R222G84B121": {
+    "name": "Fuchsia",
+    "r": 222,
+    "g": 84,
+    "b": 121,
+    "code": "C129"
+  },
+  "R252G108B133": {
+    "name": "Pink",
+    "r": 252,
+    "g": 108,
+    "b": 133,
+    "code": "C66"
+  },
+  "R230G140B163": {
+    "name": "Rosebud Pink",
+    "r": 230,
+    "g": 140,
+    "b": 163,
+    "code": "C128"
+  },
+  "R241G167B220": {
+    "name": "Carnation Pink",
+    "r": 241,
+    "g": 167,
+    "b": 220,
+    "code": "C07"
+  },
+  "R236G134B208": {
+    "name": "Raspberry Pink",
+    "r": 236,
+    "g": 134,
+    "b": 208,
+    "code": "C49"
+  },
+  "R255G52B179": {
+    "name": "Hot Pink",
+    "r": 255,
+    "g": 52,
+    "b": 179,
+    "code": "C08"
+  },
+  "R219G33B82": {
+    "name": "Eraser Pink",
+    "r": 219,
+    "g": 33,
+    "b": 82,
+    "code": "C09"
+  },
+  "R232G65B107": {
+    "name": "Flamingo",
+    "r": 232,
+    "g": 65,
+    "b": 107,
+    "code": "C131"
+  },
+  "R225G6B0": {
+    "name": "Tall Poppy",
+    "r": 225,
+    "g": 6,
+    "b": 0,
+    "code": "C05"
+  },
+  "R188G4B35": {
+    "name": "Cherry Red",
+    "r": 188,
+    "g": 4,
+    "b": 35,
+    "code": "C57"
+  },
+  "R186G12B47": {
+    "name": "Red",
+    "r": 186,
+    "g": 12,
+    "b": 47,
+    "code": "C06"
+  },
+  "R165G0B52": {
+    "name": "Paprika",
+    "r": 165,
+    "g": 0,
+    "b": 52,
+    "code": "C43"
+  },
+  "R81G9B24": {
+    "name": "Blood Rose Red",
+    "r": 81,
+    "g": 9,
+    "b": 24,
+    "code": "C145"
+  },
+  "R217G182B214": {
+    "name": "Marshmallow Rose",
+    "r": 217,
+    "g": 182,
+    "b": 214,
+    "code": "C126"
+  },
+  "R234G190B219": {
+    "name": "Muted Pink",
+    "r": 234,
+    "g": 190,
+    "b": 219,
+    "code": "C63"
+  },
+  "R173G98B164": {
+    "name": "Light Grape",
+    "r": 173,
+    "g": 98,
+    "b": 164,
+    "code": "C127"
+  },
+  "R183G56B143": {
+    "name": "Pink Plum",
+    "r": 183,
+    "g": 56,
+    "b": 143,
+    "code": "C132"
+  },
+  "R165G0B80": {
+    "name": "GameBoy Berry",
+    "r": 165,
+    "g": 0,
+    "b": 80,
+    "code": "C64"
+  },
+  "R177G78B181": {
+    "name": "Magenta",
+    "r": 177,
+    "g": 78,
+    "b": 181,
+    "code": "C67"
+  },
+  "R88G31B126": {
+    "name": "Amethyst",
+    "r": 88,
+    "g": 31,
+    "b": 126,
+    "code": "C133"
+  },
+  "R184G189B224": {
+    "name": "Pale Lilac",
+    "r": 184,
+    "g": 189,
+    "b": 224,
+    "code": "C152"
+  },
+  "R151G145B197": {
+    "name": "Lilac",
+    "r": 151,
+    "g": 145,
+    "b": 197,
+    "code": "C151"
+  },
+  "R105G99B171": {
+    "name": "Iris Violet",
+    "r": 105,
+    "g": 99,
+    "b": 171,
+    "code": "C149"
+  },
+  "R197G180B227": {
+    "name": "Maverick",
+    "r": 197,
+    "g": 180,
+    "b": 227,
+    "code": "C50"
+  },
+  "R158G130B186": {
+    "name": "Candy Violet",
+    "r": 158,
+    "g": 130,
+    "b": 186,
+    "code": "C130"
+  },
+  "R167G123B202": {
+    "name": "Lavender",
+    "r": 167,
+    "g": 123,
+    "b": 202,
+    "code": "C25"
+  },
+  "R160G94B181": {
+    "name": "Pastel Lavender",
+    "r": 160,
+    "g": 94,
+    "b": 181,
+    "code": "C26"
+  },
+  "R74G31B135": {
+    "name": "Purple",
+    "r": 74,
+    "g": 31,
+    "b": 135,
+    "code": "C52"
+  },
+  "R51G0B114": {
+    "name": "Dark Purple",
+    "r": 51,
+    "g": 0,
+    "b": 114,
+    "code": "C27"
+  },
+  "R140G163B212": {
+    "name": "Moonlight Blue",
+    "r": 140,
+    "g": 163,
+    "b": 212,
+    "code": "C134"
+  },
+  "R154G154B204": {
+    "name": "Summer Rain",
+    "r": 154,
+    "g": 154,
+    "b": 204,
+    "code": "C135"
+  },
+  "R89G129B193": {
+    "name": "Azure Blue",
+    "r": 89,
+    "g": 129,
+    "b": 193,
+    "code": "C136"
+  },
+
+  "R65G102B176": {
+    "name": "Cornflower Blue",
+    "r": 65,
+    "g": 102,
+    "b": 176,
+    "code": "C137"
+  },
+  "R71G95B171": {
+    "name": "Forget Me Not",
+    "r": 71,
+    "g": 95,
+    "b": 171,
+    "code": "C138"
+  },
+  "R55G69B147": {
+    "name": "Indigo",
+    "r": 55,
+    "g": 69,
+    "b": 147,
+    "code": "C139"
+  },
+  "R61G86B165": {
+    "name": "Horizon Blue",
+    "r": 61,
+    "g": 86,
+    "b": 165,
+    "code": "C140"
+  },
+  "R41G66B153": {
+    "name": "Cobalt",
+    "r": 41,
+    "g": 66,
+    "b": 153,
+    "code": "C141"
+  },
+  "R37G38B138": {
+    "name": "Royal Blue",
+    "r": 37,
+    "g": 38,
+    "b": 138,
+    "code": "C142"
+  },
+  "R5G8B73": {
+    "name": "Black Rock",
+    "r": 5,
+    "g": 8,
+    "b": 73,
+    "code": "C58"
+  },
+  "R170G220B235": {
+    "name": "Sky Blue",
+    "r": 170,
+    "g": 220,
+    "b": 235,
+    "code": "C18"
+  },
+  "R105G194B238": {
+    "name": "Powder Snow Blue",
+    "r": 105,
+    "g": 194,
+    "b": 238,
+    "code": "C68"
+  },
+  "R65G182B230": {
+    "name": "Baby Blue",
+    "r": 65,
+    "g": 182,
+    "b": 230,
+    "code": "C19"
+  },
+  "R49G150B221": {
+    "name": "Electric Blue",
+    "r": 49,
+    "g": 150,
+    "b": 221,
+    "code": "C100"
+  },
+  "R105G179B231": {
+    "name": "Turquoise",
+    "r": 105,
+    "g": 179,
+    "b": 231,
+    "code": "C38"
+  },
+  "R100G172B223": {
+    "name": "Himalaya Blue",
+    "r": 100,
+    "g": 172,
+    "b": 223,
+    "code": "C97"
+  },
+  "R0G144B218": {
+    "name": "Light Blue",
+    "r": 0,
+    "g": 144,
+    "b": 218,
+    "code": "C20"
+  },
+  "R27G108B282": {
+    "name": "Pool Blue",
+    "r": 27,
+    "g": 108,
+    "b": 282,
+    "code": "C101"
+  },
+  "R20G123B209": {
+    "name": "True Blue",
+    "r": 20,
+    "g": 123,
+    "b": 209,
+    "code": "C37"
+  },
+  "R8G57B128": {
+    "name": "Caribbean Blue",
+    "r": 8,
+    "g": 57,
+    "b": 128,
+    "code": "C102"
+  },
+  "R0G51B153": {
+    "name": "Dark Blue",
+    "r": 0,
+    "g": 51,
+    "b": 153,
+    "code": "C21"
+  },
+  "R26G47B111": {
+    "name": "Marine",
+    "r": 26,
+    "g": 47,
+    "b": 111,
+    "code": "C143"
+  },
+  "R153G214B234": {
+    "name": "Shadow Green",
+    "r": 153,
+    "g": 214,
+    "b": 234,
+    "code": "C39"
+  },
+  "R89G213B216": {
+    "name": "Light Sea Blue",
+    "r": 89,
+    "g": 213,
+    "b": 216,
+    "code": "C79"
+  },
+  "R79G159B179": {
+    "name": "Lagoon",
+    "r": 79,
+    "g": 159,
+    "b": 179,
+    "code": "C99"
+  },
+  "R0G174B214": {
+    "name": "Azure",
+    "r": 0,
+    "g": 174,
+    "b": 214,
+    "code": "C82"
+  },
+  "R10G102B139": {
+    "name": "Deep Water",
+    "r": 10,
+    "g": 102,
+    "b": 139,
+    "code": "C103"
+  },
+  "R8G91B110": {
+    "name": "Petrol Blue",
+    "r": 8,
+    "g": 91,
+    "b": 110,
+    "code": "C104"
+  },
+  "R0G85B116": {
+    "name": "Pond Blue",
+    "r": 0,
+    "g": 85,
+    "b": 116,
+    "code": "C106"
+  },
+  "R0G78B120": {
+    "name": "Abyss Blue",
+    "r": 0,
+    "g": 78,
+    "b": 120,
+    "code": "C105"
+  },
+  "R0G133B173": {
+    "name": "Dark Steel Blue",
+    "r": 0,
+    "g": 133,
+    "b": 173,
+    "code": "C83"
+  },
+  "R72G169B197": {
+    "name": "Steel Blue",
+    "r": 72,
+    "g": 169,
+    "b": 197,
+    "code": "C81"
+  },
+  "R100G194B220": {
+    "name": "Waterfall",
+    "r": 100,
+    "g": 194,
+    "b": 220,
+    "code": "C98"
+  },
+  "R158G229B176": {
+    "name": "Sea Mist",
+    "r": 158,
+    "g": 229,
+    "b": 176,
+    "code": "C60"
+  },
+  "R110G179B158": {
+    "name": "Spearmint",
+    "r": 110,
+    "g": 179,
+    "b": 158,
+    "code": "C146"
+  },
+  "R113G196B82": {
+    "name": "Frosty Blue",
+    "r": 113,
+    "g": 196,
+    "b": 82,
+    "code": "C118"
+  },
+  "R86G154B131": {
+    "name": "Celadon Green",
+    "r": 86,
+    "g": 154,
+    "b": 131,
+    "code": "C120"
+  },
+  "R0G178B169": {
+    "name": "Medium Turquoise",
+    "r": 0,
+    "g": 178,
+    "b": 169,
+    "code": "C54"
+  },
+  "R0G174B199": {
+    "name": "Sea Blue",
+    "r": 0,
+    "g": 174,
+    "b": 199,
+    "code": "C80"
+  },
+  "R5G70B65": {
+    "name": "Dark Eucalyptus",
+    "r": 5,
+    "g": 70,
+    "b": 65,
+    "code": "C125"
+  },
+  "R19G107B90": {
+    "name": "Snake Green",
+    "r": 19,
+    "g": 107,
+    "b": 90,
+    "code": "C124"
+  },
+  "R0G124B88": {
+    "name": "Green Tea",
+    "r": 0,
+    "g": 124,
+    "b": 88,
+    "code": "C15"
+  },
+  "R4G85B46": {
+    "name": "Pool Table Felt",
+    "r": 4,
+    "g": 85,
+    "b": 46,
+    "code": "C123"
+  },
+  "R0G133B34": {
+    "name": "Jade Green",
+    "r": 0,
+    "g": 133,
+    "b": 34,
+    "code": "C86"
+  },
+  "R36G158B107": {
+    "name": "Green",
+    "r": 36,
+    "g": 158,
+    "b": 107,
+    "code": "C14"
+  },
+  "R173G220B145": {
+    "name": "Pistachio",
+    "r": 173,
+    "g": 220,
+    "b": 145,
+    "code": "C12"
+  },
+  "R102G204B153": {
+    "name": "Polar Mint",
+    "r": 102,
+    "g": 204,
+    "b": 153,
+    "code": "C119"
+  },
+  "R93G219B93": {
+    "name": "Hospital Scrub Green",
+    "r": 93,
+    "g": 219,
+    "b": 93,
+    "code": "C45"
+  },
+  "R20G194B91": {
+    "name": "Eucalyptus",
+    "r": 20,
+    "g": 194,
+    "b": 91,
+    "code": "C121"
+  },
+  "R24G168B24": {
+    "name": "Clover Field",
+    "r": 24,
+    "g": 168,
+    "b": 24,
+    "code": "C122"
+  },
+  "R108G194B74": {
+    "name": "Glow Stick Green",
+    "r": 108,
+    "g": 194,
+    "b": 74,
+    "code": "C55"
+  },
+  "R135G216B57": {
+    "name": "Pastel Green",
+    "r": 135,
+    "g": 216,
+    "b": 57,
+    "code": "C13"
+  },
+  "R115G211B60": {
+    "name": "Bright Green",
+    "r": 115,
+    "g": 211,
+    "b": 60,
+    "code": "C53"
+  },
+  "R243G234B93": {
+    "name": "Canary",
+    "r": 243,
+    "g": 234,
+    "b": 93,
+    "code": "C46"
+  },
+  "R204G190B128": {
+    "name": "Seashell Beige",
+    "r": 204,
+    "g": 190,
+    "b": 128,
+    "code": "C107"
+  },
+  "R164G147B80": {
+    "name": "Beige",
+    "r": 164,
+    "g": 147,
+    "b": 80,
+    "code": "C108"
+  },
+  "R158G136B60": {
+    "name": "Beach Beige",
+    "r": 158,
+    "g": 136,
+    "b": 60,
+    "code": "C109"
+  },
+  "R118G108B43": {
+    "name": "Cafe Latte",
+    "r": 118,
+    "g": 108,
+    "b": 43,
+    "code": "C110"
+  },
+  "R121G95B38": {
+    "name": "Oaktree Brown",
+    "r": 121,
+    "g": 95,
+    "b": 38,
+    "code": "C111"
+  },
+  "R78G88B44": {
+    "name": "Sage Green",
+    "r": 78,
+    "g": 88,
+    "b": 44,
+    "code": "C116"
+  },
+  "R100G105B46": {
+    "name": "Earth Green",
+    "r": 100,
+    "g": 105,
+    "b": 46,
+    "code": "C115"
+  },
+  "R126G124B68": {
+    "name": "Mossy Green",
+    "r": 126,
+    "g": 124,
+    "b": 68,
+    "code": "C114"
+  },
+  "R114G140B84": {
+    "name": "Light Green-gray",
+    "r": 114,
+    "g": 140,
+    "b": 84,
+    "code": "C113"
+  },
+  "R186G184B162": {
+    "name": "Khaki",
+    "r": 186,
+    "g": 184,
+    "b": 162,
+    "code": "C112"
+  },
+  "R211G201B93": {
+    "name": "Pale Yellow Moss",
+    "r": 211,
+    "g": 201,
+    "b": 93,
+    "code": "C144"
+  },
+  "R206G220B0": {
+    "name": "Key Lemon Pie",
+    "r": 206,
+    "g": 220,
+    "b": 0,
+    "code": "C40"
+  },
+  "R155G188B17": {
+    "name": "Dark Algae",
+    "r": 155,
+    "g": 188,
+    "b": 17,
+    "code": "C84"
+  },
+  "R153G155B48": {
+    "name": "Dark Olive",
+    "r": 153,
+    "g": 155,
+    "b": 48,
+    "code": "C85"
+  },
+  "R74G94B45": {
+    "name": "Pinetree Green",
+    "r": 74,
+    "g": 94,
+    "b": 45,
+    "code": "C117"
+  },
+  "R43G63B31": {
+    "name": "Forest Green",
+    "r": 43,
+    "g": 63,
+    "b": 31,
+    "code": "C150"
+  },
+  "R24G48B40": {
+    "name": "Brunswick Green",
+    "r": 24,
+    "g": 48,
+    "b": 40,
+    "code": "C70"
+  }
+}

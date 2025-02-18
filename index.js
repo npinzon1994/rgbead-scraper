@@ -76,7 +76,8 @@ app.post("/api/upload-image", upload.single("image"), async (req, res) => {
     res.json({
       width,
       height,
-      pixels: updatedPixels,
+      originalPixels: pixels,
+      updatedPixels,
       lookupTable_LabValues,
     });
   } catch (error) {
@@ -142,8 +143,8 @@ app.post("/api/get-color-table", async (req, res) => {
       : undefined;
 
     const filePaths = [perlers, artkals, topTiers];
-    if(!filePaths) {
-      res.status(404).json({error: "File path(s) not found."})
+    if (!filePaths) {
+      res.status(404).json({ error: "File path(s) not found." });
     }
 
     scrapedColors = await readJSONFiles(filePaths); //scraped colors
